@@ -1,0 +1,38 @@
+Copyright (c) 2025 Guillaume — guillaume.immo
+Tous droits réservés.
+
+LICENCE PROPRIÉTAIRE — TOUS DROITS RÉSERVÉS
+============================================
+
+Ce logiciel, "ImmoCalc by Guillaume.immo 2.0", ainsi que l'ensemble de son
+code source, de son design, de ses algorithmes et de sa documentation associée
+(ci-après "l'Œuvre"), est la propriété exclusive de son auteur.
+
+DROITS ACCORDÉS
+---------------
+L'accès en lecture à l'interface publique de cet outil est autorisé à titre
+gratuit et personnel, uniquement via l'URL officielle publiée par l'auteur.
+
+INTERDICTIONS STRICTES
+-----------------------
+Sauf autorisation écrite et préalable de l'auteur, il est formellement interdit :
+
+1. De copier, reproduire ou dupliquer tout ou partie du code source.
+2. De modifier, adapter, traduire ou créer des œuvres dérivées.
+3. De distribuer, publier, revendre ou sous-licencier l'Œuvre.
+4. D'utiliser l'Œuvre ou ses composants dans un projet commercial ou personnel.
+5. De supprimer ou modifier les mentions de droits d'auteur.
+
+ABSENCE DE GARANTIE
+--------------------
+L'Œuvre est fournie "telle quelle", sans garantie d'aucune sorte.
+Les résultats produits par cet outil sont fournis à titre indicatif uniquement
+et ne constituent pas un conseil financier, juridique ou fiscal.
+L'auteur décline toute responsabilité quant à l'utilisation des résultats.
+
+CONTACT
+-------
+Pour toute demande d'autorisation ou question relative à cette licence :
+Contactez l'auteur via le site officiel guillaume.immo
+
+© 2025 Guillaume — guillaume.immo — Tous droits réservés.
