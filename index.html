@@ -1,0 +1,1224 @@
+<!DOCTYPE html>
+<!-- saved from url=(0045)file:///C:/Users/monte/Downloads/index_4.html -->
+<html lang="fr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ImmoCalc by Guillaume.immo 2.0 — Calculatrice Immobilière</title>
+<link href="./index_files/css2" rel="stylesheet">
+<style>
+  :root {
+    --noir: #080810;
+    --surface: #0F0F1C;
+    --card: #13131F;
+    --card2: #181828;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --text: #EEE8D8;
+    --text2: #B8B0A0;
+    --muted: #6A6460;
+    --gold: #C9A84C;
+    --gold2: #E8C96A;
+    --gold-dim: rgba(201,168,76,0.12);
+    --gold-glow: rgba(201,168,76,0.25);
+    --coral: #C45A42;
+    --coral2: #E07860;
+    --violet: #6B52A0;
+    --violet2: #9278CC;
+    --teal: #2A9E8A;
+    --teal2: #3DCAB4;
+    --sky: #3A8FC4;
+    --sky2: #5AB4E8;
+    --mint: #3AAD70;
+    --mint2: #52D48E;
+    --pink: #B8448C;
+    --pink2: #D468AA;
+    --green: #2A8E6A;
+    --green2: #44C090;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--noir);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .bg-layer {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  }
+  .bg-layer::before {
+    content: ''; position: absolute; width: 900px; height: 900px;
+    top: -300px; left: -200px;
+    background: radial-gradient(circle, rgba(107,82,160,0.09) 0%, transparent 65%);
+    border-radius: 50%;
+  }
+  .bg-layer::after {
+    content: ''; position: absolute; width: 700px; height: 700px;
+    bottom: -200px; right: -100px;
+    background: radial-gradient(circle, rgba(42,158,138,0.07) 0%, transparent 65%);
+    border-radius: 50%;
+  }
+  .bg-grain {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+  }
+
+  header {
+    position: relative; z-index: 50; padding: 32px 52px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo { display: flex; align-items: center; gap: 18px; }
+  .logo-mark {
+    width: 48px; height: 48px; border: 1px solid var(--gold); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center; font-size: 20px;
+    background: var(--gold-dim); box-shadow: 0 0 24px var(--gold-glow);
+  }
+  .logo-name { font-family: 'Cormorant Garamond', serif; font-weight: 600; font-size: 26px; letter-spacing: 0.03em; color: var(--text); line-height: 1; }
+  .logo-name span { color: var(--gold); }
+  .logo-sub { font-size: 10px; font-weight: 400; color: var(--muted); letter-spacing: 3px; text-transform: uppercase; margin-top: 4px; }
+  .header-badge {
+    display: flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 500;
+    letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold);
+    border: 1px solid rgba(201,168,76,0.35); padding: 8px 18px; border-radius: 40px; background: var(--gold-dim);
+  }
+
+  .hero { position: relative; z-index: 5; text-align: center; padding: 64px 20px 48px; }
+  .hero-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; opacity: 0; animation: fadeUp 0.7s ease 0.1s forwards; }
+  .hero h1 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(40px, 6vw, 72px); line-height: 1.1; letter-spacing: -0.01em; margin-bottom: 8px; color: var(--text); opacity: 0; animation: fadeUp 0.7s ease 0.2s forwards; }
+  .hero h1 em { font-style: italic; color: var(--gold2); }
+  .hero-line { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 28px auto; opacity: 0; animation: fadeUp 0.7s ease 0.3s forwards; }
+  .hero p { color: var(--text2); font-size: 15px; font-weight: 300; max-width: 480px; margin: 0 auto; line-height: 1.8; letter-spacing: 0.01em; opacity: 0; animation: fadeUp 0.7s ease 0.4s forwards; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  .nav-tabs {
+    position: relative; z-index: 5; display: flex; gap: 6px;
+    padding: 0 40px 40px; justify-content: center; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.7s ease 0.5s forwards;
+  }
+  .tab-btn {
+    display: flex; align-items: center; gap: 7px; padding: 9px 18px;
+    border-radius: 40px; border: 1px solid var(--border); background: transparent;
+    color: var(--muted); font-family: 'Outfit', sans-serif; font-size: 12px;
+    font-weight: 400; letter-spacing: 0.5px; cursor: pointer; transition: all 0.2s ease; white-space: nowrap;
+  }
+  .tab-btn:hover { border-color: var(--border2); color: var(--text2); }
+  .tab-btn.active { font-weight: 500; color: var(--noir); border-color: transparent; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+  .tab-btn.active.c1 { background: linear-gradient(135deg, var(--coral), #D4704A); color: #fff; }
+  .tab-btn.active.c2 { background: linear-gradient(135deg, var(--violet), #8868BC); color: #fff; }
+  .tab-btn.active.c3 { background: linear-gradient(135deg, var(--teal), var(--teal2)); }
+  .tab-btn.active.c4 { background: linear-gradient(135deg, var(--gold), var(--gold2)); }
+  .tab-btn.active.c5 { background: linear-gradient(135deg, var(--mint), var(--mint2)); }
+  .tab-btn.active.c6 { background: linear-gradient(135deg, var(--sky), var(--sky2)); }
+  .tab-btn.active.c7 { background: linear-gradient(135deg, var(--pink), var(--pink2)); color: #fff; }
+  .tab-btn.active.c8 { background: linear-gradient(135deg, var(--green), var(--green2)); }
+
+  /* ── PREMIUM LOCK sur les tabs ── */
+  .tab-btn.premium-locked {
+    position: relative;
+    opacity: 0.55;
+  }
+  .tab-btn.premium-locked::after {
+    content: '🔒';
+    font-size: 9px;
+    margin-left: 2px;
+  }
+  .tab-btn.premium-locked:hover {
+    opacity: 0.75;
+  }
+
+  main { position: relative; z-index: 5; max-width: 960px; margin: 0 auto; padding: 0 24px 80px; }
+  .module { display: none; animation: fadeUp 0.35s ease; }
+  .module.active { display: block; }
+
+  .calc-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+    padding: 44px 44px 36px; margin-bottom: 20px; position: relative; overflow: hidden;
+  }
+  .calc-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; }
+  .calc-card.accent-coral::after  { background: linear-gradient(90deg, transparent, var(--coral2), transparent); }
+  .calc-card.accent-violet::after { background: linear-gradient(90deg, transparent, var(--violet2), transparent); }
+  .calc-card.accent-teal::after   { background: linear-gradient(90deg, transparent, var(--teal2), transparent); }
+  .calc-card.accent-gold::after   { background: linear-gradient(90deg, transparent, var(--gold2), transparent); }
+  .calc-card.accent-sky::after    { background: linear-gradient(90deg, transparent, var(--sky2), transparent); }
+  .calc-card.accent-mint::after   { background: linear-gradient(90deg, transparent, var(--mint2), transparent); }
+  .calc-card.accent-pink::after   { background: linear-gradient(90deg, transparent, var(--pink2), transparent); }
+  .calc-card.accent-green::after  { background: linear-gradient(90deg, transparent, var(--green2), transparent); }
+
+  .card-header { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 36px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+  .card-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.08); }
+  .card-header-text h2 { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600; letter-spacing: 0.01em; line-height: 1.2; margin-bottom: 5px; }
+  .card-header-text p { font-size: 13px; color: var(--muted); font-weight: 300; letter-spacing: 0.02em; }
+
+  .section-label { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 28px; }
+  .field { display: flex; flex-direction: column; gap: 9px; }
+  label { font-size: 10px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; }
+  input, select { background: var(--card2); border: 1px solid var(--border); border-radius: 10px; padding: 13px 16px; color: var(--text); font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 400; transition: border-color 0.2s, box-shadow 0.2s; outline: none; width: 100%; letter-spacing: 0.01em; }
+  input::placeholder { color: var(--muted); font-weight: 300; }
+  input:focus, select:focus { border-color: rgba(201,168,76,0.4); box-shadow: 0 0 0 3px rgba(201,168,76,0.06); }
+  select option { background: var(--card2); }
+  .field-hint { font-size: 10px; color: var(--muted); line-height: 1.5; letter-spacing: 0.02em; }
+
+  .sub-section { margin: 0 0 24px; padding: 22px 24px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 14px; }
+  .sub-section-title { font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+  .sub-section-warning { font-size: 11px; color: var(--muted); padding: 10px 14px; background: rgba(255,255,255,0.03); border-radius: 8px; margin-top: 14px; line-height: 1.6; border-left: 2px solid rgba(201,168,76,0.3); }
+
+  .btn-calc { width: 100%; padding: 16px 24px; border: none; border-radius: 12px; font-family: 'Outfit', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.25s ease; position: relative; overflow: hidden; }
+  .btn-calc::before { content: ''; position: absolute; inset: 0; background: rgba(255,255,255,0.08); opacity: 0; transition: opacity 0.2s; }
+  .btn-calc:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.5); }
+  .btn-calc:hover::before { opacity: 1; }
+  .btn-calc:active { transform: translateY(0); }
+  .btn-coral  { background: linear-gradient(135deg, var(--coral), #D4704A); color: #fff; }
+  .btn-violet { background: linear-gradient(135deg, var(--violet), #8868BC); color: #fff; }
+  .btn-teal   { background: linear-gradient(135deg, var(--teal), var(--teal2)); color: var(--noir); }
+  .btn-gold   { background: linear-gradient(135deg, var(--gold), var(--gold2)); color: var(--noir); }
+  .btn-sky    { background: linear-gradient(135deg, var(--sky), var(--sky2)); color: var(--noir); }
+  .btn-mint   { background: linear-gradient(135deg, var(--mint), var(--mint2)); color: var(--noir); }
+  .btn-pink   { background: linear-gradient(135deg, var(--pink), var(--pink2)); color: #fff; }
+  .btn-green  { background: linear-gradient(135deg, var(--green), var(--green2)); color: var(--noir); }
+
+  .result-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 28px; }
+  .result-box { background: var(--card2); border: 1px solid var(--border); border-radius: 14px; padding: 22px 18px; text-align: center; transition: border-color 0.2s, transform 0.2s; position: relative; overflow: hidden; }
+  .result-box:hover { border-color: var(--border2); transform: translateY(-2px); }
+  .result-label { font-size: 9px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+  .result-value { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 600; line-height: 1.1; letter-spacing: -0.01em; }
+  .result-value small { font-family: 'Outfit', sans-serif; font-size: 12px; font-weight: 400; opacity: 0.7; letter-spacing: 0; }
+  .result-sub { font-size: 10px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+
+  .feasibility-banner { border-radius: 12px; padding: 18px 22px; margin-top: 20px; display: flex; align-items: center; gap: 14px; font-size: 13px; font-weight: 500; letter-spacing: 0.02em; line-height: 1.5; }
+  .feasibility-banner.green  { background: rgba(52,193,120,0.08); border: 1px solid rgba(52,193,120,0.2); color: var(--mint2); }
+  .feasibility-banner.orange { background: rgba(201,168,76,0.08); border: 1px solid rgba(201,168,76,0.2); color: var(--gold2); }
+  .feasibility-banner.red    { background: rgba(196,90,66,0.08); border: 1px solid rgba(196,90,66,0.2); color: var(--coral2); }
+
+  .progress-wrap { background: rgba(255,255,255,0.05); border-radius: 6px; height: 6px; overflow: hidden; margin-top: 10px; }
+  .progress-bar { height: 100%; border-radius: 6px; transition: width 0.9s cubic-bezier(0.4,0,0.2,1); }
+
+  .note-box { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; font-size: 12px; color: var(--muted); line-height: 1.8; margin-top: 16px; letter-spacing: 0.02em; }
+  .note-box strong { color: var(--text2); font-weight: 500; }
+  .divider { height: 1px; background: var(--border); margin: 28px 0; }
+  .hidden { display: none !important; }
+
+  /* ── PREMIUM GATE ── */
+  .premium-gate {
+    background: var(--card);
+    border: 1px solid rgba(201,168,76,0.25);
+    border-radius: 20px;
+    padding: 56px 44px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .premium-gate::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .premium-gate-icon {
+    font-size: 40px;
+    margin-bottom: 20px;
+    display: block;
+  }
+  .premium-gate h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--text);
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+  }
+  .premium-gate p {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.8;
+    max-width: 380px;
+    margin: 0 auto 32px;
+  }
+  .premium-gate-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 36px;
+  }
+  .premium-gate-feature {
+    background: var(--gold-dim);
+    border: 1px solid rgba(201,168,76,0.2);
+    color: var(--gold2);
+    font-size: 11px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    letter-spacing: 0.05em;
+  }
+  .btn-unlock {
+    display: inline-block;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    border: none;
+    border-radius: 12px;
+    color: var(--noir);
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    margin-bottom: 24px;
+  }
+  .btn-unlock:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(201,168,76,0.3); }
+
+  .code-section {
+    margin-top: 8px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .code-section p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .code-input-row {
+    display: flex;
+    gap: 10px;
+    max-width: 360px;
+    margin: 0 auto;
+  }
+  .code-input-row input {
+    flex: 1;
+    text-align: center;
+    letter-spacing: 3px;
+    font-size: 15px;
+    font-weight: 500;
+    text-transform: uppercase;
+    background: var(--card2);
+    border: 1px solid var(--border2);
+  }
+  .code-input-row input:focus {
+    border-color: rgba(201,168,76,0.5);
+  }
+  .btn-code {
+    padding: 13px 20px;
+    background: var(--card2);
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn-code:hover { border-color: var(--gold); color: var(--gold); }
+  .code-error { color: var(--coral2); font-size: 11px; margin-top: 10px; display: none; }
+  .code-success { color: var(--mint2); font-size: 11px; margin-top: 10px; display: none; }
+
+  /* Badge premium débloqué */
+  .premium-unlocked-badge {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    background: var(--gold-dim);
+    border: 1px solid rgba(201,168,76,0.3);
+    color: var(--gold2);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 8px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+  }
+  .premium-unlocked-badge.visible { display: flex; }
+
+  footer { position: relative; z-index: 5; text-align: center; padding: 40px; color: var(--muted); font-size: 11px; letter-spacing: 1px; border-top: 1px solid var(--border); }
+  footer span { color: var(--gold); }
+
+  @media (max-width: 640px) {
+    header { padding: 20px 24px; }
+    .calc-card, .premium-gate { padding: 28px 20px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 36px; }
+    .nav-tabs { padding: 0 16px 32px; }
+    .code-input-row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-layer"></div>
+<div class="bg-grain"></div>
+
+<header>
+  <div class="logo">
+    <div class="logo-mark">🏠</div>
+    <div>
+      <div class="logo-name">ImmoCalc <span>by Guillaume.immo</span> 2.0</div>
+      <div class="logo-sub">Calculatrice Immobilière</div>
+    </div>
+  </div>
+  <div id="header-right">
+    <div class="header-badge" id="badge-normal" style="display: flex;">✦ Outil Complet</div>
+    <div class="premium-unlocked-badge" id="badge-premium" onclick="resetPremium()" title="Cliquer pour réinitialiser">✦ Premium Actif &nbsp;·&nbsp; ✕</div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-eyebrow">Simulation Immobilière Professionnelle</div>
+  <h1>Bienvenue sur<br><em>ImmoCalc by Guillaume.immo 2.0</em></h1>
+  <div class="hero-line"></div>
+  <p>Achat, investissement locatif, financement — tous vos calculs réunis dans un outil de précision.</p>
+</div>
+
+<nav class="nav-tabs">
+  <button class="tab-btn c1 active" onclick="showModule(&#39;capacite&#39;,this)">🎯 Capacité d'emprunt</button>
+  <button class="tab-btn c2" onclick="showModule(&#39;mensualites&#39;,this)">📊 Mensualités</button>
+  <button class="tab-btn c3" onclick="showModule(&#39;notaire&#39;,this)">📋 Frais de notaire</button>
+  <button class="tab-btn c4 premium-locked" id="tab-rentabilite" onclick="showModule(&#39;rentabilite&#39;,this)">💰 Rentabilité locative</button>
+  <button class="tab-btn c5 premium-locked" id="tab-cashflow" onclick="showModule(&#39;cashflow&#39;,this)">💸 Cash-flow</button>
+  <button class="tab-btn c6" onclick="showModule(&#39;plusvalue&#39;,this)">📈 Plus-value immobilière</button>
+  <button class="tab-btn c7 premium-locked" id="tab-caution" onclick="showModule(&#39;caution&#39;,this)">🔒 Frais de caution</button>
+  <button class="tab-btn c8 premium-locked" id="tab-faisabilite" onclick="showModule(&#39;faisabilite&#39;,this)">✅ Faisabilité</button>
+</nav>
+
+<main>
+
+  <!-- MODULE 1 : CAPACITE D'EMPRUNT -->
+  <div class="module active" id="mod-capacite">
+    <div class="calc-card accent-coral">
+      <div class="card-header">
+        <div class="card-icon" style="background: rgba(196,90,66,0.15);">🎯</div>
+        <div class="card-header-text">
+          <h2>Capacité d'emprunt</h2>
+          <p>Calculez le montant maximum que vous pouvez emprunter</p>
+        </div>
+      </div>
+      <div class="section-label" style="color:var(--text2)">Revenus &amp; paramètres</div>
+      <div class="form-grid">
+        <div class="field"><label>Revenu net mensuel (€)</label><input type="number" id="cap-revenu" placeholder="3 500"></div>
+        <div class="field"><label>Co-emprunteur (€/mois)</label><input type="number" id="cap-revenu2" placeholder="0 si seul" value="0"></div>
+        <div class="field"><label>Charges mensuelles (€)</label><input type="number" id="cap-charges" placeholder="500" value="0"></div>
+        <div class="field"><label>Taux d'intérêt annuel (%)</label><input type="number" id="cap-taux" placeholder="3.5" value="3.5" step="0.1"></div>
+        <div class="field"><label>Durée du prêt (années)</label><input type="number" id="cap-duree" placeholder="25" value="25"></div>
+        <div class="field">
+          <label>Taux d'endettement max (%)</label>
+          <select id="cap-taux-endet">
+            <option value="33">33 % (standard)</option>
+            <option value="35" selected="">35 % (HCSF 2022)</option>
+          </select>
+        </div>
+      </div>
+      <div class="sub-section" style="border-color: rgba(196,90,66,0.2)">
+        <div class="sub-section-title" style="color:var(--coral2)">🏘️ Loyers — Impact sur l'endettement</div>
+        <div class="form-grid" style="margin-bottom:0">
+          <div class="field"><label>Loyers perçus actuels (€/mois)</label><input type="number" id="cap-loyers-percus" placeholder="600" value="0"><span class="field-hint">Pris en compte à 70 % par les banques</span></div>
+          <div class="field"><label>Loyers futurs envisagés (€/mois)</label><input type="number" id="cap-loyers-futurs" placeholder="800" value="0"><span class="field-hint">Bien à acheter — 70 % retenus</span></div>
+          <div class="field"><label>Crédits locatifs existants (€/mois)</label><input type="number" id="cap-credits-loca" placeholder="500" value="0"><span class="field-hint">Mensualités sur biens déjà loués</span></div>
+        </div>
+      </div>
+      <div class="sub-section" style="border-color: rgba(201,168,76,0.2)">
+        <div class="sub-section-title" style="color:var(--gold2)">💳 Prêts à la consommation en cours</div>
+        <div class="form-grid" style="margin-bottom:0">
+          <div class="field"><label>Crédit auto (€/mois)</label><input type="number" id="cap-conso-auto" placeholder="250" value="0"></div>
+          <div class="field"><label>Crédit personnel (€/mois)</label><input type="number" id="cap-conso-perso" placeholder="150" value="0"></div>
+          <div class="field"><label>Crédit revolving (€/mois)</label><input type="number" id="cap-conso-revolving" placeholder="80" value="0"></div>
+          <div class="field"><label>Autres crédits conso (€/mois)</label><input type="number" id="cap-conso-autres" placeholder="100" value="0"></div>
+        </div>
+        <div class="sub-section-warning">⚠️ <strong style="color:var(--text2)">Impact direct :</strong> chaque euro de mensualité conso réduit votre mensualité immobilière disponible.</div>
+      </div>
+      <button class="btn-calc btn-coral" onclick="calcCapacite()">Calculer ma capacité d'emprunt</button>
+      <div id="res-capacite" class="result-grid hidden"></div>
+      <div id="res-capacite-note" class="note-box hidden"></div>
+    </div>
+  </div>
+
+  <!-- MODULE 2 : MENSUALITES -->
+  <div class="module" id="mod-mensualites">
+    <div class="calc-card accent-violet">
+      <div class="card-header">
+        <div class="card-icon" style="background: rgba(107,82,160,0.15);">📊</div>
+        <div class="card-header-text">
+          <h2>Mensualités &amp; Coût total</h2>
+          <p>Simulez vos remboursements et le coût global de votre crédit</p>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>Montant emprunté (€)</label><input type="number" id="men-montant" placeholder="200 000"></div>
+        <div class="field"><label>Taux d'intérêt annuel (%)</label><input type="number" id="men-taux" placeholder="3.5" value="3.5" step="0.1"></div>
+        <div class="field"><label>Durée (années)</label><input type="number" id="men-duree" placeholder="20" value="20"></div>
+        <div class="field"><label>Assurance emprunteur (%/an)</label><input type="number" id="men-assurance" placeholder="0.30" value="0.30" step="0.01"></div>
+        <div class="field"><label>Apport personnel (€)</label><input type="number" id="men-apport" placeholder="20 000" value="0"></div>
+      </div>
+      <button class="btn-calc btn-violet" onclick="calcMensualites()">Simuler mon crédit</button>
+      <div id="res-mensualites" class="result-grid hidden"></div>
+      <div id="res-men-note" class="note-box hidden"></div>
+    </div>
+  </div>
+
+  <!-- MODULE 3 : FRAIS DE NOTAIRE -->
+  <div class="module" id="mod-notaire">
+    <div class="calc-card accent-teal">
+      <div class="card-header">
+        <div class="card-icon" style="background: rgba(42,158,138,0.15);">📋</div>
+        <div class="card-header-text">
+          <h2>Frais de notaire</h2>
+          <p>Estimez les frais selon le type de bien et le département</p>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label>Prix du bien (€)</label><input type="number" id="not-prix" placeholder="250 000"></div>
+        <div class="field">
+          <label>Type de bien</label>
+          <select id="not-type">
+            <option value="ancien">Ancien (7–8 %)</option>
+            <option value="neuf">Neuf (2–3 %)</option>
+            <option value="terrain">Terrain (7–8 %)</option>
+          </select>
+        </div>
+        <div class="field" style="grid-column: span 2">
+          <label>Département du bien</label>
+          <select id="not-dept">
+            <option value="4.50">01 – Ain (4,50 %)</option><option value="4.50">02 – Aisne (4,50 %)</option><option value="4.50">03 – Allier (4,50 %)</option><option value="4.50">04 – Alpes-de-Haute-Provence (4,50 %)</option><option value="4.50">05 – Hautes-Alpes (4,50 %)</option><option value="4.50">06 – Alpes-Maritimes (4,50 %)</option><option value="4.50">07 – Ardèche (4,50 %)</option><option value="4.50">08 – Ardennes (4,50 %)</option><option value="4.50">09 – Ariège (4,50 %)</option><option value="4.50">10 – Aube (4,50 %)</option><option value="4.50">11 – Aude (4,50 %)</option><option value="4.50">12 – Aveyron (4,50 %)</option><option value="4.50">13 – Bouches-du-Rhône (4,50 %)</option><option value="4.50">14 – Calvados (4,50 %)</option><option value="4.50">15 – Cantal (4,50 %)</option><option value="4.50">16 – Charente (4,50 %)</option><option value="4.50">17 – Charente-Maritime (4,50 %)</option><option value="4.50">18 – Cher (4,50 %)</option><option value="4.50">19 – Corrèze (4,50 %)</option><option value="4.50">2A – Corse-du-Sud (4,50 %)</option><option value="4.50">2B – Haute-Corse (4,50 %)</option><option value="4.50">21 – Côte-d'Or (4,50 %)</option><option value="4.50">22 – Côtes-d'Armor (4,50 %)</option><option value="4.50">23 – Creuse (4,50 %)</option><option value="4.50">24 – Dordogne (4,50 %)</option><option value="4.50">25 – Doubs (4,50 %)</option><option value="4.50">26 – Drôme (4,50 %)</option><option value="3.80">27 – Eure (3,80 % — taux réduit ✦)</option><option value="4.50">28 – Eure-et-Loir (4,50 %)</option><option value="4.50">29 – Finistère (4,50 %)</option><option value="4.50">30 – Gard (4,50 %)</option><option value="4.50">31 – Haute-Garonne (4,50 %)</option><option value="4.50">32 – Gers (4,50 %)</option><option value="4.50">33 – Gironde (4,50 %)</option><option value="4.50">34 – Hérault (4,50 %)</option><option value="4.50">35 – Ille-et-Vilaine (4,50 %)</option><option value="4.50">36 – Indre (4,50 %)</option><option value="4.50">37 – Indre-et-Loire (4,50 %)</option><option value="4.50">38 – Isère (4,50 %)</option><option value="4.50">39 – Jura (4,50 %)</option><option value="4.50">40 – Landes (4,50 %)</option><option value="4.50">41 – Loir-et-Cher (4,50 %)</option><option value="4.50">42 – Loire (4,50 %)</option><option value="4.50">43 – Haute-Loire (4,50 %)</option><option value="4.50">44 – Loire-Atlantique (4,50 %)</option><option value="4.50">45 – Loiret (4,50 %)</option><option value="4.50">46 – Lot (4,50 %)</option><option value="4.50">47 – Lot-et-Garonne (4,50 %)</option><option value="4.50">48 – Lozère (4,50 %)</option><option value="4.50">49 – Maine-et-Loire (4,50 %)</option><option value="4.50">50 – Manche (4,50 %)</option><option value="4.50">51 – Marne (4,50 %)</option><option value="4.50">52 – Haute-Marne (4,50 %)</option><option value="4.50">53 – Mayenne (4,50 %)</option><option value="4.50">54 – Meurthe-et-Moselle (4,50 %)</option><option value="4.50">55 – Meuse (4,50 %)</option><option value="3.80">56 – Morbihan (3,80 % — taux réduit ✦)</option><option value="4.50">57 – Moselle (4,50 %)</option><option value="4.50">58 – Nièvre (4,50 %)</option><option value="4.50">59 – Nord (4,50 %)</option><option value="4.50">60 – Oise (4,50 %)</option><option value="4.50">61 – Orne (4,50 %)</option><option value="4.50">62 – Pas-de-Calais (4,50 %)</option><option value="4.50">63 – Puy-de-Dôme (4,50 %)</option><option value="4.50">64 – Pyrénées-Atlantiques (4,50 %)</option><option value="4.50">65 – Hautes-Pyrénées (4,50 %)</option><option value="4.50">66 – Pyrénées-Orientales (4,50 %)</option><option value="4.50">67 – Bas-Rhin (4,50 %)</option><option value="4.50">68 – Haut-Rhin (4,50 %)</option><option value="4.50">69 – Rhône (4,50 %)</option><option value="4.50">70 – Haute-Saône (4,50 %)</option><option value="4.50">71 – Saône-et-Loire (4,50 %)</option><option value="4.50">72 – Sarthe (4,50 %)</option><option value="4.50">73 – Savoie (4,50 %)</option><option value="4.50">74 – Haute-Savoie (4,50 %)</option><option value="4.50">75 – Paris (4,50 %)</option><option value="4.50">76 – Seine-Maritime (4,50 %)</option><option value="4.50">77 – Seine-et-Marne (4,50 %)</option><option value="4.50">78 – Yvelines (4,50 %)</option><option value="4.50">79 – Deux-Sèvres (4,50 %)</option><option value="4.50">80 – Somme (4,50 %)</option><option value="4.50">81 – Tarn (4,50 %)</option><option value="4.50">82 – Tarn-et-Garonne (4,50 %)</option><option value="4.50">83 – Var (4,50 %)</option><option value="4.50">84 – Vaucluse (4,50 %)</option><option value="4.50">85 – Vendée (4,50 %)</option><option value="4.50">86 – Vienne (4,50 %)</option><option value="4.50">87 – Haute-Vienne (4,50 %)</option><option value="4.50">88 – Vosges (4,50 %)</option><option value="4.50">89 – Yonne (4,50 %)</option><option value="4.50">90 – Territoire de Belfort (4,50 %)</option><option value="4.50">91 – Essonne (4,50 %)</option><option value="4.50">92 – Hauts-de-Seine (4,50 %)</option><option value="4.50">93 – Seine-Saint-Denis (4,50 %)</option><option value="4.50">94 – Val-de-Marne (4,50 %)</option><option value="4.50">95 – Val-d'Oise (4,50 %)</option><option value="4.50">971 – Guadeloupe (4,50 %)</option><option value="4.50">972 – Martinique (4,50 %)</option><option value="4.50">973 – Guyane (4,50 %)</option><option value="4.50">974 – La Réunion (4,50 %)</option><option value="4.50">976 – Mayotte (4,50 %)</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-calc btn-teal" onclick="calcNotaire()">Estimer les frais</button>
+      <div id="res-notaire" class="result-grid hidden"></div>
+      <div id="res-not-detail" class="note-box hidden"></div>
+    </div>
+  </div>
+
+  <!-- MODULE 4 : RENTABILITE (PREMIUM) -->
+  <div class="module" id="mod-rentabilite">
+    <div id="gate-rentabilite">
+    <div class="premium-gate">
+      <span class="premium-gate-icon">⚡</span>
+      <h3>💰 Rentabilité locative</h3>
+      <p>Cet outil est réservé aux membres <strong style="color:var(--gold)">Premium</strong>. Débloquez l'accès complet pour 4,90 € (accès à vie).</p>
+      <div class="premium-gate-features">
+        <span class="premium-gate-feature">💰 Rentabilité locative</span>
+        <span class="premium-gate-feature">💸 Cash-flow mensuel</span>
+        <span class="premium-gate-feature">🔒 Frais de caution</span>
+        <span class="premium-gate-feature">✅ Analyse faisabilité</span>
+      </div>
+      <a href="https://buy.stripe.com/aFa8wQ3Ts0Ju7I39uG6wE00" class="btn-unlock" target="_blank">🔒 Débloquer l'accès Premium — 4,90€</a>
+      <div class="code-section">
+        <p>Déjà client ? Saisissez votre code d'accès reçu par email après achat :</p>
+        <div class="code-input-row">
+          <input type="text" id="premium-code-input" placeholder="CODE D&#39;ACCÈS" maxlength="20" onkeydown="if(event.key===&#39;Enter&#39;) unlockPremium()">
+          <button class="btn-code" onclick="unlockPremium()">Valider</button>
+        </div>
+        <div class="code-error" id="code-error"></div>
+        <div class="code-success" id="code-success"></div>
+      </div>
+    </div>
+  </div>
+    <div id="content-rentabilite" class="hidden">
+      <div class="calc-card accent-gold">
+        <div class="card-header">
+          <div class="card-icon" style="background: rgba(201,168,76,0.15);">💰</div>
+          <div class="card-header-text">
+            <h2>Rentabilité locative</h2>
+            <p>Calculez le rendement brut et net de votre investissement</p>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="field"><label>Prix d'achat (€)</label><input type="number" id="rent-prix" placeholder="150 000"></div>
+          <div class="field"><label>Frais de notaire (€)</label><input type="number" id="rent-notaire" placeholder="11 000"></div>
+          <div class="field"><label>Travaux / rénovation (€)</label><input type="number" id="rent-travaux" placeholder="5 000" value="0"></div>
+          <div class="field"><label>Loyer mensuel (€)</label><input type="number" id="rent-loyer" placeholder="700"></div>
+          <div class="field"><label>Charges annuelles (€)</label><input type="number" id="rent-charges" placeholder="1 200" value="0"></div>
+          <div class="field"><label>Taxe foncière annuelle (€)</label><input type="number" id="rent-taxe" placeholder="800" value="0"></div>
+          <div class="field"><label>Assurance PNO annuelle (€)</label><input type="number" id="rent-assurance" placeholder="150" value="0"></div>
+          <div class="field"><label>Gestion locative (%/loyer)</label><input type="number" id="rent-gestion" placeholder="8" value="0" step="0.5"></div>
+        </div>
+        <button class="btn-calc btn-gold" onclick="calcRentabilite()">Calculer la rentabilité</button>
+        <div id="res-rentabilite" class="result-grid hidden"></div>
+        <div id="res-rent-bar" class="hidden" style="margin-top:20px"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULE 5 : CASH-FLOW (PREMIUM) -->
+  <div class="module" id="mod-cashflow">
+    <div id="gate-cashflow">
+    <div class="premium-gate">
+      <span class="premium-gate-icon">⚡</span>
+      <h3>💸 Cash-flow mensuel</h3>
+      <p>Cet outil est réservé aux membres <strong style="color:var(--gold)">Premium</strong>. Débloquez l'accès complet pour 4,90 € (accès à vie).</p>
+      <div class="premium-gate-features">
+        <span class="premium-gate-feature">💰 Rentabilité locative</span>
+        <span class="premium-gate-feature">💸 Cash-flow mensuel</span>
+        <span class="premium-gate-feature">🔒 Frais de caution</span>
+        <span class="premium-gate-feature">✅ Analyse faisabilité</span>
+      </div>
+      <a href="https://buy.stripe.com/aFa8wQ3Ts0Ju7I39uG6wE00" class="btn-unlock" target="_blank">🔒 Débloquer l'accès Premium — 4,90€</a>
+      <div class="code-section">
+        <p>Déjà client ? Saisissez votre code d'accès reçu par email après achat :</p>
+        <div class="code-input-row">
+          <input type="text" id="premium-code-input" placeholder="CODE D&#39;ACCÈS" maxlength="20" onkeydown="if(event.key===&#39;Enter&#39;) unlockPremium()">
+          <button class="btn-code" onclick="unlockPremium()">Valider</button>
+        </div>
+        <div class="code-error" id="code-error"></div>
+        <div class="code-success" id="code-success"></div>
+      </div>
+    </div>
+  </div>
+    <div id="content-cashflow" class="hidden">
+      <div class="calc-card accent-mint">
+        <div class="card-header">
+          <div class="card-icon" style="background: rgba(58,173,112,0.15);">💸</div>
+          <div class="card-header-text">
+            <h2>Cash-flow mensuel</h2>
+            <p>Sachez si votre investissement s'autofinance</p>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="field"><label>Loyer perçu (€/mois)</label><input type="number" id="cf-loyer" placeholder="800"></div>
+          <div class="field"><label>Mensualité crédit (€/mois)</label><input type="number" id="cf-credit" placeholder="600"></div>
+          <div class="field"><label>Charges copropriété (€/mois)</label><input type="number" id="cf-charges-copro" placeholder="80" value="0"></div>
+          <div class="field"><label>Taxe foncière (€/mois)</label><input type="number" id="cf-taxe" placeholder="60" value="0"></div>
+          <div class="field"><label>Assurance PNO (€/mois)</label><input type="number" id="cf-assurance" placeholder="15" value="0"></div>
+          <div class="field"><label>Gestion locative (€/mois)</label><input type="number" id="cf-gestion" placeholder="64" value="0"></div>
+          <div class="field"><label>Vacance locative (€/mois)</label><input type="number" id="cf-vacance" placeholder="40" value="0"></div>
+          <div class="field"><label>Autres charges (€/mois)</label><input type="number" id="cf-autres" placeholder="20" value="0"></div>
+        </div>
+        <button class="btn-calc btn-mint" onclick="calcCashflow()">Calculer mon cash-flow</button>
+        <div id="res-cashflow" class="result-grid hidden"></div>
+        <div id="res-cf-banner" class="hidden"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULE 6 : PLUS-VALUE -->
+  <div class="module" id="mod-plusvalue">
+    <div class="calc-card accent-sky">
+      <div class="card-header">
+        <div class="card-icon" style="background: rgba(58,143,196,0.15);">📈</div>
+        <div class="card-header-text">
+          <h2>Plus-value immobilière</h2>
+          <p>Calculez l'imposition sur la plus-value de votre bien locatif ou secondaire</p>
+        </div>
+      </div>
+      <div class="section-label" style="color:var(--text2)">Données du bien</div>
+      <div class="form-grid">
+        <div class="field"><label>Prix d'acquisition (€)</label><input type="number" id="pv-prix-achat" placeholder="150 000"><span class="field-hint">Prix payé lors de l'achat</span></div>
+        <div class="field"><label>Frais d'acquisition (€)</label><input type="number" id="pv-frais-achat" placeholder="11 000" value="0"><span class="field-hint">Frais de notaire, agence… ou forfait 7,5 %</span></div>
+        <div class="field"><label>Travaux réalisés (€)</label><input type="number" id="pv-travaux" placeholder="15 000" value="0"><span class="field-hint">Travaux déductibles (ou forfait 15 % si détenu &gt; 5 ans)</span></div>
+        <div class="field"><label>Prix de cession (€)</label><input type="number" id="pv-prix-vente" placeholder="220 000"><span class="field-hint">Prix de vente du bien</span></div>
+        <div class="field"><label>Frais de cession (€)</label><input type="number" id="pv-frais-vente" placeholder="0" value="0"><span class="field-hint">Frais d'agence, diagnostics…</span></div>
+        <div class="field"><label>Durée de détention (années)</label><input type="number" id="pv-duree" placeholder="8" min="0" max="30"><span class="field-hint">Nombre d'années entre achat et vente</span></div>
+      </div>
+      <div class="sub-section" style="border-color: rgba(58,143,196,0.25)">
+        <div class="sub-section-title" style="color:var(--sky2)">⚙️ Options de calcul</div>
+        <div class="form-grid" style="margin-bottom:0">
+          <div class="field"><label>Forfait frais d'acquisition</label><select id="pv-forfait-achat"><option value="reel">Frais réels (saisis ci-dessus)</option><option value="forfait">Forfait 7,5 % du prix d'achat</option></select></div>
+          <div class="field"><label>Forfait travaux</label><select id="pv-forfait-travaux"><option value="reel">Travaux réels (saisis ci-dessus)</option><option value="forfait">Forfait 15 % (si détention &gt; 5 ans)</option></select></div>
+        </div>
+      </div>
+      <button class="btn-calc btn-sky" onclick="calcPlusValue()">Calculer la plus-value &amp; l'imposition</button>
+      <div id="res-plusvalue" class="result-grid hidden"></div>
+      <div id="res-pv-detail" class="hidden"></div>
+    </div>
+  </div>
+
+  <!-- MODULE 7 : CAUTION (PREMIUM) -->
+  <div class="module" id="mod-caution">
+    <div id="gate-caution">
+    <div class="premium-gate">
+      <span class="premium-gate-icon">⚡</span>
+      <h3>🔒 Frais de caution</h3>
+      <p>Cet outil est réservé aux membres <strong style="color:var(--gold)">Premium</strong>. Débloquez l'accès complet pour 4,90 € (accès à vie).</p>
+      <div class="premium-gate-features">
+        <span class="premium-gate-feature">💰 Rentabilité locative</span>
+        <span class="premium-gate-feature">💸 Cash-flow mensuel</span>
+        <span class="premium-gate-feature">🔒 Frais de caution</span>
+        <span class="premium-gate-feature">✅ Analyse faisabilité</span>
+      </div>
+      <a href="https://buy.stripe.com/aFa8wQ3Ts0Ju7I39uG6wE00" class="btn-unlock" target="_blank">🔒 Débloquer l'accès Premium — 4,90€</a>
+      <div class="code-section">
+        <p>Déjà client ? Saisissez votre code d'accès reçu par email après achat :</p>
+        <div class="code-input-row">
+          <input type="text" id="premium-code-input" placeholder="CODE D&#39;ACCÈS" maxlength="20" onkeydown="if(event.key===&#39;Enter&#39;) unlockPremium()">
+          <button class="btn-code" onclick="unlockPremium()">Valider</button>
+        </div>
+        <div class="code-error" id="code-error"></div>
+        <div class="code-success" id="code-success"></div>
+      </div>
+    </div>
+  </div>
+    <div id="content-caution" class="hidden">
+      <div class="calc-card accent-pink">
+        <div class="card-header">
+          <div class="card-icon" style="background: rgba(184,68,140,0.15);">🔒</div>
+          <div class="card-header-text">
+            <h2>Frais de caution</h2>
+            <p>Comparez caution bancaire vs hypothèque</p>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="field"><label>Montant emprunté (€)</label><input type="number" id="caut-montant" placeholder="200 000"></div>
+          <div class="field"><label>Type de garantie</label>
+            <select id="caut-type">
+              <option value="credit-logement">Crédit Logement (société de caution)</option>
+              <option value="camca">CAMCA / Bancaire</option>
+              <option value="hypotheque">Hypothèque conventionnelle</option>
+              <option value="ippd">IPPD (Inscription en PP de débiteur)</option>
+            </select>
+          </div>
+          <div class="field"><label>Durée du prêt (années)</label><input type="number" id="caut-duree" placeholder="20" value="20"></div>
+        </div>
+        <button class="btn-calc btn-pink" onclick="calcCaution()">Estimer les frais de garantie</button>
+        <div id="res-caution" class="result-grid hidden"></div>
+        <div id="res-caut-note" class="note-box hidden"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODULE 8 : FAISABILITE (PREMIUM) -->
+  <div class="module" id="mod-faisabilite">
+    <div id="gate-faisabilite">
+    <div class="premium-gate">
+      <span class="premium-gate-icon">⚡</span>
+      <h3>✅ Faisabilité de l'investissement</h3>
+      <p>Cet outil est réservé aux membres <strong style="color:var(--gold)">Premium</strong>. Débloquez l'accès complet pour 4,90 € (accès à vie).</p>
+      <div class="premium-gate-features">
+        <span class="premium-gate-feature">💰 Rentabilité locative</span>
+        <span class="premium-gate-feature">💸 Cash-flow mensuel</span>
+        <span class="premium-gate-feature">🔒 Frais de caution</span>
+        <span class="premium-gate-feature">✅ Analyse faisabilité</span>
+      </div>
+      <a href="https://buy.stripe.com/aFa8wQ3Ts0Ju7I39uG6wE00" class="btn-unlock" target="_blank">🔒 Débloquer l'accès Premium — 4,90€</a>
+      <div class="code-section">
+        <p>Déjà client ? Saisissez votre code d'accès reçu par email après achat :</p>
+        <div class="code-input-row">
+          <input type="text" id="premium-code-input" placeholder="CODE D&#39;ACCÈS" maxlength="20" onkeydown="if(event.key===&#39;Enter&#39;) unlockPremium()">
+          <button class="btn-code" onclick="unlockPremium()">Valider</button>
+        </div>
+        <div class="code-error" id="code-error"></div>
+        <div class="code-success" id="code-success"></div>
+      </div>
+    </div>
+  </div>
+    <div id="content-faisabilite" class="hidden">
+      <div class="calc-card accent-green">
+        <div class="card-header">
+          <div class="card-icon" style="background: rgba(42,142,106,0.15);">✅</div>
+          <div class="card-header-text">
+            <h2>Faisabilité de l'investissement</h2>
+            <p>Analyse complète de la viabilité de votre projet</p>
+          </div>
+        </div>
+        <div class="form-grid">
+          <div class="field"><label>Revenu net mensuel total (€)</label><input type="number" id="fai-revenu" placeholder="4 000"></div>
+          <div class="field"><label>Prix d'achat total (€)</label><input type="number" id="fai-prix" placeholder="200 000"></div>
+          <div class="field"><label>Apport personnel (€)</label><input type="number" id="fai-apport" placeholder="30 000" value="0"></div>
+          <div class="field"><label>Charges mensuelles actuelles (€)</label><input type="number" id="fai-charges" placeholder="500" value="0"></div>
+          <div class="field"><label>Taux d'intérêt (% annuel)</label><input type="number" id="fai-taux" placeholder="3.5" value="3.5" step="0.1"></div>
+          <div class="field"><label>Durée du prêt (années)</label><input type="number" id="fai-duree" placeholder="25" value="25"></div>
+          <div class="field"><label>Loyer mensuel envisagé (€)</label><input type="number" id="fai-loyer" placeholder="700" value="0"></div>
+          <div class="field"><label>Épargne résiduelle après achat (€)</label><input type="number" id="fai-epargne" placeholder="10 000" value="0"></div>
+        </div>
+        <div class="sub-section" style="border-color: rgba(42,142,106,0.25)">
+          <div class="sub-section-title" style="color:var(--green2)">🏠 Prêts immobiliers en cours</div>
+          <div class="form-grid" style="margin-bottom:0">
+            <div class="field"><label>Prêt immo 1 (€/mois)</label><input type="number" id="fai-pret-immo1" placeholder="650" value="0"><span class="field-hint">Résidence principale ou investissement</span></div>
+            <div class="field"><label>Prêt immo 2 (€/mois)</label><input type="number" id="fai-pret-immo2" placeholder="480" value="0"></div>
+            <div class="field"><label>Prêt immo 3 (€/mois)</label><input type="number" id="fai-pret-immo3" placeholder="0" value="0"></div>
+          </div>
+        </div>
+        <div class="sub-section" style="border-color: rgba(201,168,76,0.2)">
+          <div class="sub-section-title" style="color:var(--gold2)">💳 Prêts à la consommation en cours</div>
+          <div class="form-grid" style="margin-bottom:0">
+            <div class="field"><label>Crédit auto (€/mois)</label><input type="number" id="fai-conso-auto" placeholder="250" value="0"></div>
+            <div class="field"><label>Crédit personnel (€/mois)</label><input type="number" id="fai-conso-perso" placeholder="150" value="0"></div>
+            <div class="field"><label>Crédit revolving (€/mois)</label><input type="number" id="fai-conso-revolving" placeholder="80" value="0"></div>
+            <div class="field"><label>Autres crédits conso (€/mois)</label><input type="number" id="fai-conso-autres" placeholder="0" value="0"></div>
+          </div>
+        </div>
+        <button class="btn-calc btn-green" onclick="calcFaisabilite()">Analyser la faisabilité</button>
+        <div id="res-faisabilite" class="hidden"></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p>ImmoCalc by Guillaume.immo 2.0 — <span>Outil de simulation financière</span> · Les résultats sont indicatifs et ne constituent pas un conseil financier.</p>
+  <a href="https://www.instagram.com/guillaume.immo2.0" target="_blank" style="display:inline-flex;align-items:center;gap:10px;margin-top:20px;padding:14px 28px;background:linear-gradient(135deg,#C9A84C,#E8C96A);border-radius:12px;font-family:&#39;Outfit&#39;,sans-serif;font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:#080810;text-decoration:none;transition:all 0.25s ease;" onmouseover="this.style.transform=&#39;translateY(-2px)&#39;;this.style.boxShadow=&#39;0 12px 32px rgba(201,168,76,0.3)&#39;" onmouseout="this.style.transform=&#39;translateY(0)&#39;;this.style.boxShadow=&#39;none&#39;">
+    📩 Besoin d'un accompagnement ? Me contacter
+  </a>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════════════
+// ── SYSTÈME PREMIUM ─────────────────────────────────
+// ═══════════════════════════════════════════════════
+
+// ⚠️ CODES D'ACCÈS — Modifiez cette liste pour ajouter/supprimer des codes
+// Chaque code doit être unique. Envoyez un code par acheteur via Stripe.
+const VALID_CODES = [
+  'IMMO2024',
+  'GUILLAUME01',
+  'PREMIUM2025',
+  'INVEST2024',
+  // Ajoutez vos codes ici
+];
+
+const PREMIUM_MODULES = ['rentabilite', 'cashflow', 'caution', 'faisabilite'];
+
+function isPremium() {
+  try { return localStorage.getItem('immocalc_premium') === 'true'; } catch(e) { return false; }
+}
+
+function setPremium(val) {
+  try { localStorage.setItem('immocalc_premium', val ? 'true' : 'false'); } catch(e) {}
+}
+
+function resetPremium() {
+  if (!confirm('Réinitialiser l\'accès premium ? L\'accès sera perdu jusqu\'à saisie d\'un nouveau code.')) return;
+  setPremium(false);
+  location.reload();
+}
+
+function unlockPremium() {
+  const input = document.getElementById('premium-code-input');
+  const code = input.value.trim().toUpperCase();
+  const errorEl = document.getElementById('code-error');
+  const successEl = document.getElementById('code-success');
+
+  if (!code) { showCodeError('Veuillez saisir un code.'); return; }
+
+  if (VALID_CODES.includes(code)) {
+    setPremium(true);
+    errorEl.style.display = 'none';
+    successEl.style.display = 'block';
+    successEl.textContent = '✅ Code valide ! Accès premium débloqué.';
+    setTimeout(() => applyPremiumUI(), 800);
+  } else {
+    showCodeError('❌ Code invalide. Vérifiez votre email de confirmation.');
+  }
+}
+
+function showCodeError(msg) {
+  const el = document.getElementById('code-error');
+  el.textContent = msg;
+  el.style.display = 'block';
+}
+
+function buildGate(moduleName) {
+  const names = {
+    rentabilite: { title: 'Rentabilité locative', icon: '💰' },
+    cashflow: { title: 'Cash-flow mensuel', icon: '💸' },
+    caution: { title: 'Frais de caution', icon: '🔒' },
+    faisabilite: { title: 'Faisabilité de l\'investissement', icon: '✅' }
+  };
+  const m = names[moduleName];
+  return `
+    <div class="premium-gate">
+      <span class="premium-gate-icon">⚡</span>
+      <h3>${m.icon} ${m.title}</h3>
+      <p>Cet outil est réservé aux membres <strong style="color:var(--gold)">Premium</strong>. Débloquez l'accès complet pour 4,90 € (accès à vie).</p>
+      <div class="premium-gate-features">
+        <span class="premium-gate-feature">💰 Rentabilité locative</span>
+        <span class="premium-gate-feature">💸 Cash-flow mensuel</span>
+        <span class="premium-gate-feature">🔒 Frais de caution</span>
+        <span class="premium-gate-feature">✅ Analyse faisabilité</span>
+      </div>
+      <a href="https://buy.stripe.com/aFa8wQ3Ts0Ju7I39uG6wE00" class="btn-unlock" target="_blank">🔒 Débloquer l'accès Premium — 4,90€</a>
+      <div class="code-section">
+        <p>Déjà client ? Saisissez votre code d'accès reçu par email après achat :</p>
+        <div class="code-input-row">
+          <input type="text" id="premium-code-input" placeholder="CODE D'ACCÈS" maxlength="20" onkeydown="if(event.key==='Enter') unlockPremium()">
+          <button class="btn-code" onclick="unlockPremium()">Valider</button>
+        </div>
+        <div class="code-error" id="code-error"></div>
+        <div class="code-success" id="code-success"></div>
+      </div>
+    </div>
+  `;
+}
+
+function applyPremiumUI() {
+  const premium = isPremium();
+
+  PREMIUM_MODULES.forEach(name => {
+    const gateEl = document.getElementById('gate-' + name);
+    const contentEl = document.getElementById('content-' + name);
+    const tabEl = document.getElementById('tab-' + name);
+
+    if (premium) {
+      if (gateEl) gateEl.innerHTML = '';
+      if (contentEl) contentEl.classList.remove('hidden');
+      if (tabEl) tabEl.classList.remove('premium-locked');
+    } else {
+      if (gateEl) gateEl.innerHTML = buildGate(name);
+      if (contentEl) contentEl.classList.add('hidden');
+      if (tabEl) tabEl.classList.add('premium-locked');
+    }
+  });
+
+  // Badge header
+  const badgeNormal = document.getElementById('badge-normal');
+  const badgePremium = document.getElementById('badge-premium');
+  if (premium) {
+    badgeNormal.style.display = 'none';
+    badgePremium.classList.add('visible');
+  } else {
+    badgeNormal.style.display = 'flex';
+    badgePremium.classList.remove('visible');
+  }
+}
+
+// Init au chargement
+document.addEventListener('DOMContentLoaded', applyPremiumUI);
+
+// ═══════════════════════════════════════════════════
+// ── NAVIGATION ──────────────────────────────────────
+// ═══════════════════════════════════════════════════
+function showModule(name, btn) {
+  document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('mod-' + name).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// ═══════════════════════════════════════════════════
+// ── HELPERS ─────────────────────────────────────────
+// ═══════════════════════════════════════════════════
+const fmt  = n => new Intl.NumberFormat('fr-FR', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Math.round(n));
+const fmtD = (n, d=2) => new Intl.NumberFormat('fr-FR', { minimumFractionDigits: d, maximumFractionDigits: d }).format(n);
+const v    = id => parseFloat(document.getElementById(id).value) || 0;
+
+function resultBox(label, value, unit='', color='var(--teal2)', sub='') {
+  return `<div class="result-box">
+    <div class="result-label">${label}</div>
+    <div class="result-value" style="color:${color}">${value}<small> ${unit}</small></div>
+    ${sub ? `<div class="result-sub">${sub}</div>` : ''}
+  </div>`;
+}
+
+function showResult(id, html) {
+  const el = document.getElementById(id);
+  el.innerHTML = html;
+  el.classList.remove('hidden');
+}
+
+// ═══════════════════════════════════════════════════
+// ── CALCULS ─────────────────────────────────────────
+// ═══════════════════════════════════════════════════
+
+function calcCapacite() {
+  const revBrut = v('cap-revenu') + v('cap-revenu2');
+  const charges = v('cap-charges');
+  const loyersPercus = v('cap-loyers-percus');
+  const loyersFuturs = v('cap-loyers-futurs');
+  const creditsLoca = v('cap-credits-loca');
+  const taux = v('cap-taux') / 100 / 12;
+  const n = v('cap-duree') * 12;
+  const maxEndet = v('cap-taux-endet') / 100;
+  if (!revBrut || !v('cap-taux') || !n) return alert('Veuillez remplir tous les champs obligatoires.');
+  const loyersPercusRetenu = loyersPercus * 0.70;
+  const loyersFuturRetenu  = loyersFuturs * 0.70;
+  const revTotal = revBrut + loyersPercusRetenu + loyersFuturRetenu;
+  const consoTotal = v('cap-conso-auto') + v('cap-conso-perso') + v('cap-conso-revolving') + v('cap-conso-autres');
+  const chargesTotal = charges + creditsLoca + consoTotal;
+  const mensMax = revTotal * maxEndet - chargesTotal;
+  let capacite = taux === 0 ? mensMax * n : mensMax * (1 - Math.pow(1 + taux, -n)) / taux;
+  const tauxSansLoyers = ((chargesTotal + mensMax) / revBrut) * 100;
+  const mensMaxSans = revBrut * maxEndet - chargesTotal;
+  const capaciteSans = taux === 0 ? mensMaxSans * n : mensMaxSans * (1 - Math.pow(1+taux,-n)) / taux;
+  const gainCapacite = capacite - capaciteSans;
+  showResult('res-capacite',
+    resultBox('Capacité d\'emprunt', fmt(Math.max(capacite,0)), '€', 'var(--coral2)', 'Loyers & crédits conso inclus') +
+    resultBox('Mensualité max', fmt(Math.max(mensMax,0)), '€/mois', 'var(--gold2)') +
+    resultBox('Revenus retenus', fmt(revTotal), '€/mois', 'var(--violet2)', `dont ${fmt(loyersPercusRetenu + loyersFuturRetenu)} € de loyers (70 %)`) +
+    resultBox('Charges totales', fmt(chargesTotal), '€/mois', chargesTotal > 0 ? 'var(--coral2)' : 'var(--muted)', `dont ${fmt(consoTotal)} € crédits conso`) +
+    resultBox('Taux endettement réel', fmtD(tauxSansLoyers,1), '%', tauxSansLoyers <= 35 ? 'var(--mint2)' : 'var(--coral2)', 'Base revenus salariaux') +
+    resultBox('Gain capacité (loyers)', gainCapacite > 0 ? '+' + fmt(gainCapacite) : fmt(gainCapacite), '€', gainCapacite > 0 ? 'var(--teal2)' : 'var(--muted)', 'Vs sans revenus locatifs')
+  );
+  let noteLoyers = '';
+  if (consoTotal > 0) {
+    const perteConso = taux === 0 ? consoTotal * n : consoTotal * (1 - Math.pow(1+taux,-n)) / taux;
+    noteLoyers += `<strong>💳 Crédits conso :</strong> vos <strong>${fmt(consoTotal)} €/mois</strong> de crédits conso réduisent votre capacité de <strong>−${fmt(perteConso)} €</strong>.<br><br>`;
+  }
+  if (loyersPercus > 0 || loyersFuturs > 0) {
+    noteLoyers += `<strong>📌 Règle bancaire (loyers) :</strong> intégrés à <strong>70 %</strong>. Apport de <strong>+${fmt(Math.max(gainCapacite,0))} €</strong> de capacité supplémentaire.`;
+  }
+  if (!noteLoyers) noteLoyers = `<strong>💡 Conseil :</strong> Renseignez vos loyers et crédits conso pour une simulation plus précise.`;
+  showResult('res-capacite-note', noteLoyers);
+}
+
+function calcMensualites() {
+  const montant = v('men-montant') - v('men-apport');
+  const taux = v('men-taux') / 100 / 12;
+  const n = v('men-duree') * 12;
+  const assurance = v('men-assurance') / 100 / 12 * montant;
+  if (!montant || !v('men-taux') || !n) return alert('Veuillez remplir tous les champs obligatoires.');
+  const mensHorAssurance = taux === 0 ? montant / n : montant * taux / (1 - Math.pow(1 + taux, -n));
+  const mensTotal = mensHorAssurance + assurance;
+  const coutTotal = mensTotal * n;
+  const coutInterets = coutTotal - montant - (assurance * n);
+  const coutAssurance = assurance * n;
+  showResult('res-mensualites',
+    resultBox('Mensualité totale', fmt(mensTotal), '€/mois', 'var(--violet2)') +
+    resultBox('dont crédit', fmt(mensHorAssurance), '€/mois', 'var(--sky2)') +
+    resultBox('dont assurance', fmt(assurance), '€/mois', 'var(--muted)') +
+    resultBox('Coût total du crédit', fmt(coutTotal), '€', 'var(--coral2)', 'Capital + intérêts + assurance') +
+    resultBox('Total intérêts', fmt(coutInterets), '€', 'var(--gold2)') +
+    resultBox('Total assurance', fmt(coutAssurance), '€', 'var(--teal2)')
+  );
+  showResult('res-men-note', `<strong>ℹ️ Info :</strong> Pour un emprunt de <strong>${fmt(montant)} €</strong> sur <strong>${v('men-duree')} ans</strong> à <strong>${v('men-taux')} %</strong>, vous remboursez au total <strong>${fmt(coutTotal)} €</strong>.`);
+}
+
+function calcNotaire() {
+  const prix = v('not-prix');
+  const type = document.getElementById('not-type').value;
+  const tauxDMTO = parseFloat(document.getElementById('not-dept').value) / 100;
+  if (!prix) return alert('Veuillez saisir le prix du bien.');
+  const isReduit = tauxDMTO < 0.045;
+  const deptLabel = document.getElementById('not-dept').options[document.getElementById('not-dept').selectedIndex].text;
+  let droitsEnreg, emoluments, formalites, debours, fraisTotaux;
+  if (type === 'neuf') {
+    droitsEnreg = prix * 0.00715; emoluments = calcEmoluments(prix); formalites = prix * 0.001 + 300; debours = 400;
+  } else {
+    const taxeCommune = prix * 0.012; const fraisAssiette = prix * tauxDMTO * 0.0237;
+    droitsEnreg = prix * tauxDMTO + taxeCommune + fraisAssiette; emoluments = calcEmoluments(prix); formalites = prix * 0.001 + 300; debours = 400;
+  }
+  fraisTotaux = droitsEnreg + emoluments + formalites + debours;
+  const tauxFinal = (fraisTotaux / prix) * 100;
+  showResult('res-notaire',
+    resultBox('Droits de mutation', fmt(droitsEnreg), '€', 'var(--coral2)', type === 'neuf' ? 'Taux réduit (neuf)' : `Taux dépt : ${(tauxDMTO*100).toFixed(2)} %`) +
+    resultBox('Émoluments notaire', fmt(emoluments), '€', 'var(--violet2)') +
+    resultBox('Formalités & débours', fmt(formalites + debours), '€', 'var(--sky2)') +
+    resultBox('Total frais notaire', fmt(fraisTotaux), '€', 'var(--gold2)', `Soit ${fmtD(tauxFinal,2)} % du prix`) +
+    resultBox('Budget total', fmt(prix + fraisTotaux), '€', 'var(--teal2)', 'Prix + frais notaire')
+  );
+  const noteReduit = isReduit && type !== 'neuf' ? `<br><br>✦ <strong>Taux réduit :</strong> ce département applique <strong>${(tauxDMTO*100).toFixed(2)} %</strong> au lieu de 4,50 %.` : '';
+  showResult('res-not-detail', `<strong>📍 Département :</strong> ${deptLabel}<br><strong>Décomposition :</strong> Droits : ${fmt(droitsEnreg)} € · Émoluments : ${fmt(emoluments)} € · Formalités : ${fmt(formalites + debours)} €${noteReduit}<br><br><strong>ℹ️ Note :</strong> Estimations indicatives. Le notaire fournira un décompte exact.`);
+}
+
+function calcEmoluments(prix) {
+  let e = 0;
+  if (prix <= 6500)       e = prix * 0.03870;
+  else if (prix <= 17000) e = 6500*0.03870 + (prix-6500)*0.01596;
+  else if (prix <= 60000) e = 6500*0.03870 + 10500*0.01596 + (prix-17000)*0.01064;
+  else                    e = 6500*0.03870 + 10500*0.01596 + 43000*0.01064 + (prix-60000)*0.00799;
+  return Math.max(e, 90);
+}
+
+function calcRentabilite() {
+  const prix = v('rent-prix'), notaire = v('rent-notaire'), travaux = v('rent-travaux');
+  const loyer = v('rent-loyer'), charges = v('rent-charges'), taxe = v('rent-taxe');
+  const assurance = v('rent-assurance'), gestionPct = v('rent-gestion') / 100;
+  if (!prix || !loyer) return alert('Veuillez saisir le prix et le loyer.');
+  const investTotal = prix + notaire + travaux;
+  const loyersAnnuels = loyer * 12;
+  const gestion = loyersAnnuels * gestionPct;
+  const chargesNettes = charges + taxe + assurance + gestion;
+  const rentBrute = (loyersAnnuels / investTotal) * 100;
+  const rentNette = ((loyersAnnuels - chargesNettes) / investTotal) * 100;
+  const rentNetteFiscale = rentNette * 0.70;
+  showResult('res-rentabilite',
+    resultBox('Rendement brut', fmtD(rentBrute,2), '%', 'var(--gold2)') +
+    resultBox('Rendement net', fmtD(rentNette,2), '%', 'var(--mint2)') +
+    resultBox('Rendement net-net', fmtD(rentNetteFiscale,2), '%', 'var(--teal2)', 'Après fiscalité ~30 %') +
+    resultBox('Investissement total', fmt(investTotal), '€', 'var(--coral2)') +
+    resultBox('Loyers annuels', fmt(loyersAnnuels), '€', 'var(--violet2)') +
+    resultBox('Charges annuelles', fmt(chargesNettes), '€', 'var(--muted)')
+  );
+  const pct = Math.min(rentNette / 10 * 100, 100);
+  const barColor = rentNette >= 7 ? 'var(--mint2)' : rentNette >= 5 ? 'var(--gold2)' : 'var(--coral2)';
+  const note = rentNette >= 7 ? '🟢 Excellent investissement' : rentNette >= 5 ? '🟡 Investissement correct' : '🔴 Rendement faible';
+  const rentBar = document.getElementById('res-rent-bar');
+  rentBar.innerHTML = `<div style="margin-bottom:8px;font-size:12px;color:var(--muted);letter-spacing:0.05em">${note} · Rendement net : ${fmtD(rentNette,2)} %</div><div class="progress-wrap"><div class="progress-bar" style="width:${pct}%;background:${barColor}"></div></div>`;
+  rentBar.classList.remove('hidden');
+}
+
+function calcCashflow() {
+  const loyer = v('cf-loyer'), credit = v('cf-credit');
+  const charges = v('cf-charges-copro') + v('cf-taxe') + v('cf-assurance') + v('cf-gestion') + v('cf-vacance') + v('cf-autres');
+  const total = credit + charges;
+  const cf = loyer - total;
+  if (!loyer || !credit) return alert('Veuillez saisir le loyer et la mensualité crédit.');
+  showResult('res-cashflow',
+    resultBox('Cash-flow mensuel', (cf >= 0 ? '+' : '') + fmt(cf), '€/mois', cf >= 0 ? 'var(--mint2)' : 'var(--coral2)') +
+    resultBox('Cash-flow annuel', (cf >= 0 ? '+' : '') + fmt(cf*12), '€/an', cf >= 0 ? 'var(--teal2)' : 'var(--coral2)') +
+    resultBox('Total sorties', fmt(total), '€/mois', 'var(--muted)') +
+    resultBox('Loyer perçu', fmt(loyer), '€/mois', 'var(--gold2)')
+  );
+  const banner = document.getElementById('res-cf-banner');
+  let cls, icon, msg;
+  if (cf > 100)       { cls='green';  icon='🎉'; msg=`Autofinancement positif de +${fmt(cf)} €/mois. Votre bien génère des revenus.`; }
+  else if (cf >= 0)   { cls='orange'; icon='✅'; msg=`L'investissement est quasiment à l'équilibre (+${fmt(cf)} €/mois).`; }
+  else if (cf > -200) { cls='orange'; icon='⚠️'; msg=`Effort mensuel de ${fmt(Math.abs(cf))} €. Acceptable selon votre capacité.`; }
+  else                { cls='red';    icon='❌'; msg=`Effort mensuel élevé de ${fmt(Math.abs(cf))} €. À revoir.`; }
+  banner.innerHTML = `<div class="feasibility-banner ${cls}">${icon} ${msg}</div>`;
+  banner.classList.remove('hidden');
+}
+
+function calcPlusValue() {
+  const prixAchat = v('pv-prix-achat'), prixVente = v('pv-prix-vente'), fraisVente = v('pv-frais-vente'), duree = v('pv-duree');
+  const forfaitAchat = document.getElementById('pv-forfait-achat').value;
+  const forfaitTravaux = document.getElementById('pv-forfait-travaux').value;
+  if (!prixAchat || !prixVente) return alert('Veuillez saisir le prix d\'achat et le prix de vente.');
+  const fraisAchat = forfaitAchat === 'forfait' ? prixAchat * 0.075 : v('pv-frais-achat');
+  const travaux = forfaitTravaux === 'forfait' && duree >= 5 ? prixAchat * 0.15 : v('pv-travaux');
+  const prixRevient = prixAchat + fraisAchat + travaux;
+  const prixCessionNet = prixVente - fraisVente;
+  const pvBrute = prixCessionNet - prixRevient;
+  if (pvBrute <= 0) {
+    showResult('res-plusvalue', resultBox('Plus-value brute', fmt(pvBrute), '€', 'var(--mint2)', 'Moins-value — aucune imposition') + resultBox('Prix de revient', fmt(prixRevient), '€', 'var(--muted)') + resultBox('Prix de cession net', fmt(prixCessionNet), '€', 'var(--muted)'));
+    const el = document.getElementById('res-pv-detail');
+    el.innerHTML = `<div class="feasibility-banner green" style="margin-top:20px">✅ Moins-value de ${fmt(Math.abs(pvBrute))} € — aucune imposition.</div>`;
+    el.classList.remove('hidden');
+    return;
+  }
+  function getAbattIR(ans) { if (ans <= 5) return 0; if (ans >= 22) return 100; return Math.min((ans - 5) * 6, 96) + (ans >= 22 ? 4 : 0); }
+  function getAbattPS(ans) {
+    if (ans <= 5) return 0; if (ans >= 30) return 100;
+    let pct = 0;
+    for (let i = 6; i <= ans; i++) { if (i <= 21) pct += 1.65; else if (i === 22) pct += 1.60; else pct += 9; }
+    return Math.min(pct, 100);
+  }
+  const pctAbattIR = getAbattIR(duree), pctAbattPS = getAbattPS(duree);
+  const pvImposableIR = pvBrute * (1 - pctAbattIR / 100), pvImposablePS = pvBrute * (1 - pctAbattPS / 100);
+  const impotIR = pvImposableIR * 0.19, impotPS = pvImposablePS * 0.172;
+  const impotTotal = impotIR + impotPS, pvNette = pvBrute - impotTotal;
+  const tauxEffectif = pvBrute > 0 ? (impotTotal / pvBrute) * 100 : 0;
+  showResult('res-plusvalue',
+    resultBox('Plus-value brute', fmt(pvBrute), '€', 'var(--sky2)') +
+    resultBox('Abattement IR', fmtD(pctAbattIR, 1), '%', pctAbattIR >= 100 ? 'var(--mint2)' : 'var(--gold2)', `${duree} ans de détention`) +
+    resultBox('Abattement PS', fmtD(pctAbattPS, 1), '%', pctAbattPS >= 100 ? 'var(--mint2)' : 'var(--gold2)', 'Prélèvements sociaux') +
+    resultBox('Impôt IR (19 %)', fmt(impotIR), '€', 'var(--coral2)', pctAbattIR >= 100 ? 'Exonéré ✅' : `Sur ${fmt(pvImposableIR)} €`) +
+    resultBox('Prélèv. sociaux (17,2 %)', fmt(impotPS), '€', 'var(--violet2)', pctAbattPS >= 100 ? 'Exonéré ✅' : `Sur ${fmt(pvImposablePS)} €`) +
+    resultBox('Imposition totale', fmt(impotTotal), '€', 'var(--coral2)', `Taux effectif : ${fmtD(tauxEffectif, 1)} %`) +
+    resultBox('Plus-value nette', fmt(pvNette), '€', 'var(--mint2)', 'Après imposition') +
+    resultBox('Prix de revient', fmt(prixRevient), '€', 'var(--muted)', 'Achat + frais + travaux')
+  );
+  const anneesIRexo = Math.max(0, 22 - duree), anneesPhexo = Math.max(0, 30 - duree);
+  let conseils = '';
+  if (duree < 22) conseils += `<br>🕐 <strong>Exonération IR complète</strong> dans <strong>${anneesIRexo} an${anneesIRexo > 1 ? 's' : ''}</strong>.`;
+  if (duree < 30) conseils += `<br>🕐 <strong>Exonération PS complète</strong> dans <strong>${anneesPhexo} an${anneesPhexo > 1 ? 's' : ''}</strong>.`;
+  if (duree >= 30) conseils += `<br>🎉 <strong>Exonération totale</strong> (IR + PS).`;
+  const el = document.getElementById('res-pv-detail');
+  el.innerHTML = `<div class="note-box" style="margin-top:16px"><strong>📊 Prix de revient :</strong> Achat : ${fmt(prixAchat)} € · Frais : ${fmt(fraisAchat)} € · Travaux : ${fmt(travaux)} €<br><br><strong>📐 Abattements :</strong> IR : ${fmtD(pctAbattIR,1)} % · PS : ${fmtD(pctAbattPS,1)} % — après <strong>${duree} an${duree>1?'s':''}</strong>${conseils}</div>`;
+  el.classList.remove('hidden');
+}
+
+function calcCaution() {
+  const montant = v('caut-montant'), type = document.getElementById('caut-type').value;
+  if (!montant) return alert('Veuillez saisir le montant emprunté.');
+  let frais = 0, remboursable = 0, detail = '';
+  if (type === 'credit-logement') {
+    const commission = montant * 0.0047, fonds = montant * 0.0085;
+    frais = commission + fonds; remboursable = fonds * 0.75;
+    detail = `Commission : ${fmt(commission)} € (non remboursable) · Fonds mutuel : ${fmt(fonds)} € dont <strong>${fmt(remboursable)} € récupérables</strong>.`;
+  } else if (type === 'camca') {
+    frais = montant * 0.006; detail = `Frais de caution bancaire. Non remboursables.`;
+  } else if (type === 'hypotheque') {
+    frais = montant * 0.015 + 500; detail = `Hypothèque conventionnelle : ~1,5 % + mainlevée en fin de prêt.`;
+  } else {
+    frais = montant * 0.005 + 300; detail = `IPPD : pour terrains ou biens sans hypothèque préexistante.`;
+  }
+  showResult('res-caution',
+    resultBox('Coût total garantie', fmt(frais), '€', 'var(--coral2)') +
+    resultBox('Part récupérable', fmt(remboursable), '€', 'var(--mint2)') +
+    resultBox('Coût net réel', fmt(frais - remboursable), '€', 'var(--gold2)') +
+    resultBox('% du prêt', fmtD((frais/montant)*100,2), '%', 'var(--violet2)')
+  );
+  showResult('res-caut-note', `<strong>Détail :</strong> ${detail}`);
+}
+
+function calcFaisabilite() {
+  const revenu = v('fai-revenu'), prix = v('fai-prix'), apport = v('fai-apport');
+  const charges = v('fai-charges'), taux = v('fai-taux')/100/12, n = v('fai-duree')*12;
+  const loyer = v('fai-loyer'), epargne = v('fai-epargne');
+  const pretsImmo = v('fai-pret-immo1') + v('fai-pret-immo2') + v('fai-pret-immo3');
+  const pretsConso = v('fai-conso-auto') + v('fai-conso-perso') + v('fai-conso-revolving') + v('fai-conso-autres');
+  if (!revenu || !prix || !v('fai-taux')) return alert('Veuillez remplir les champs essentiels.');
+  const montantEmprunte = prix - apport;
+  const mens = taux === 0 ? montantEmprunte/n : montantEmprunte*taux/(1-Math.pow(1+taux,-n));
+  const assurance = montantEmprunte * 0.003 / 12;
+  const mensNouveauCredit = mens + assurance;
+  const totalCredits = mensNouveauCredit + pretsImmo + pretsConso;
+  const totalCharges = charges + totalCredits;
+  const tauxEndetBrut = (totalCharges / revenu) * 100;
+  const tauxEndetAvecLoyer = ((totalCharges - loyer*0.7) / revenu) * 100;
+  const tauxRef = loyer > 0 ? tauxEndetAvecLoyer : tauxEndetBrut;
+  const apportPct = (apport / prix) * 100;
+  const mensReste = revenu - totalCharges;
+  let score = 0, criteres = [];
+  if (apportPct >= 10) { score+=2; criteres.push({ok:true,  txt:`Apport ≥ 10 % (${fmtD(apportPct,1)} %)`}); }
+  else                 {           criteres.push({ok:false, txt:`Apport insuffisant (${fmtD(apportPct,1)} % < 10 % recommandé)`}); }
+  if (tauxRef <= 35)      { score+=2; criteres.push({ok:true,  txt:`Taux d'endettement : ${fmtD(tauxRef,1)} % (≤ 35 %)`}); }
+  else if (tauxRef <= 40) { score+=1; criteres.push({ok:false, txt:`Taux d'endettement élevé : ${fmtD(tauxRef,1)} % (> 35 %)`}); }
+  else                    {           criteres.push({ok:false, txt:`Taux d'endettement trop élevé : ${fmtD(tauxRef,1)} % (> 40 %)`}); }
+  if (mensReste >= 500)   { score+=2; criteres.push({ok:true,  txt:`Reste à vivre : ${fmt(mensReste)} €/mois`}); }
+  else if (mensReste >= 0){ score+=1; criteres.push({ok:false, txt:`Reste à vivre faible : ${fmt(mensReste)} €/mois`}); }
+  else                    {           criteres.push({ok:false, txt:`Reste à vivre négatif : ${fmt(mensReste)} €/mois`}); }
+  if (epargne >= montantEmprunte * 0.03) { score+=1; criteres.push({ok:true,  txt:`Épargne de sécurité suffisante (${fmt(epargne)} €)`}); }
+  else                                   {           criteres.push({ok:false, txt:`Épargne de sécurité faible (${fmt(epargne)} €)`}); }
+  if (pretsConso === 0)    { score+=1; criteres.push({ok:true,  txt:`Aucun crédit conso — dossier allégé`}); }
+  else if (pretsConso<=200){           criteres.push({ok:false, txt:`Crédits conso modérés : ${fmt(pretsConso)} €/mois`}); }
+  else                     {           criteres.push({ok:false, txt:`Crédits conso importants : ${fmt(pretsConso)} €/mois`}); }
+  if (loyer > 0) {
+    const cf = loyer - mensNouveauCredit;
+    if (cf >= 0) { score+=1; criteres.push({ok:true,  txt:`Cash-flow positif : +${fmt(cf)} €/mois`}); }
+    else         {           criteres.push({ok:false, txt:`Cash-flow négatif : ${fmt(cf)} €/mois`}); }
+  }
+  if (pretsImmo > 0) {
+    const chargeImmoTotale = ((pretsImmo + mensNouveauCredit) / revenu) * 100;
+    if (chargeImmoTotale <= 30) { score+=1; criteres.push({ok:true,  txt:`Charge immobilière globale : ${fmtD(chargeImmoTotale,1)} %`}); }
+    else                        {           criteres.push({ok:false, txt:`Charge immobilière cumulée élevée : ${fmtD(chargeImmoTotale,1)} %`}); }
+  }
+  const maxScore = 7 + (loyer > 0 ? 1 : 0) + (pretsImmo > 0 ? 1 : 0);
+  const pctScore = Math.round((score / maxScore) * 100);
+  let verdict, cls, emoji;
+  if (pctScore >= 75)      { verdict='Projet FAISABLE — Dossier solide'; cls='green'; emoji='🟢'; }
+  else if (pctScore >= 50) { verdict='Projet RISQUÉ — À optimiser';      cls='orange'; emoji='🟡'; }
+  else                     { verdict='Projet DIFFICILE — À reconsidérer'; cls='red'; emoji='🔴'; }
+  const barColor = pctScore >= 75 ? 'var(--mint2)' : pctScore >= 50 ? 'var(--gold2)' : 'var(--coral2)';
+  const critHtml = criteres.map(c => `<div style="padding:10px 14px;margin:5px 0;border-radius:10px;font-size:12px;letter-spacing:0.02em;background:${c.ok?'rgba(58,173,112,0.07)':'rgba(196,90,66,0.07)'};border:1px solid ${c.ok?'rgba(58,173,112,0.18)':'rgba(196,90,66,0.18)'};color:${c.ok?'var(--mint2)':'var(--coral2)'}"> ${c.ok?'✅':'❌'} ${c.txt}</div>`).join('');
+  const html = `
+    <div class="result-grid">
+      ${resultBox('Montant à emprunter', fmt(montantEmprunte), '€', 'var(--coral2)')}
+      ${resultBox('Nouveau crédit mensuel', fmt(mensNouveauCredit), '€/mois', 'var(--gold2)')}
+      ${resultBox('Total crédits (tous)', fmt(totalCredits), '€/mois', 'var(--violet2)', `immo: ${fmt(pretsImmo+mensNouveauCredit)} € · conso: ${fmt(pretsConso)} €`)}
+      ${resultBox("Taux d'endettement", fmtD(tauxRef,1), '%', tauxRef<=35?'var(--mint2)':'var(--coral2)', loyer>0?'Avec loyers à 70 %':'Tous crédits inclus')}
+      ${resultBox('Reste à vivre', fmt(mensReste), '€/mois', mensReste>=500?'var(--teal2)':'var(--coral2)', 'Après toutes charges')}
+    </div>
+    <div style="margin-top:24px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)">
+        <span>Score de faisabilité</span><span style="color:${barColor};font-weight:600">${pctScore} %</span>
+      </div>
+      <div class="progress-wrap"><div class="progress-bar" style="width:${pctScore}%;background:${barColor}"></div></div>
+    </div>
+    <div class="feasibility-banner ${cls}" style="margin-top:18px">${emoji} ${verdict}</div>
+    <div style="margin-top:16px">${critHtml}</div>
+    ${pretsConso > 0 ? `<div class="note-box" style="margin-top:16px">💡 <strong>Conseil :</strong> Solder vos crédits conso (<strong>${fmt(pretsConso)} €/mois</strong>) réduirait votre taux d'endettement de <strong>${fmtD(pretsConso/revenu*100,1)} points</strong>.</div>` : ''}
+  `;
+  const el = document.getElementById('res-faisabilite');
+  el.innerHTML = html;
+  el.classList.remove('hidden');
+}
+</script>
+
+
+</body></html>
